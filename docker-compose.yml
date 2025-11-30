@@ -1,0 +1,35 @@
+services:
+  dev:
+    image: vpp-dev-make
+    # build: 
+    #   context: .
+    #   dockerfile: Dockerfile
+    #   args:
+    #     USER_UID: 1000
+    #     USER_GID: 1000
+    #     NEOVIM_VERSION: v0.11.5
+    command: sleep infinity
+    working_dir: ${PWD}
+    privileged: true
+    network_mode: "host"
+    pid: "host"
+    ipc: "host"
+    uts: "host"
+    cgroup: "host"
+    security_opt:
+      - label:disable
+    volumes:
+      - /dev:/dev
+      - /sys:/sys
+      - /run:/run
+      - /lib/modules:/lib/modules:ro
+      - /usr/src:/usr/src:ro
+      - /boot:/boot:ro
+      - ${PWD}:${PWD}
+      - ~/.config/nvim:/home/dev/.config/nvim
+      - nvim_data:/home/dev/.local/share/nvim
+      - nvim_state:/home/dev/.local/state/nvim
+
+volumes:
+  nvim_data:
+  nvim_state:
